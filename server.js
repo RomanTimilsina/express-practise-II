@@ -4,12 +4,17 @@ app = express()
 
 app.set('view engine', 'ejs')
 
-app.get("/", (req,res) => {
-  console.log("Here")
+app.get("/", logger, logger, (req,res) => {
   res.render("index.ejs", { text: "World"})
 })
 
+
 const userRouter = require("./routes/user")
 app.use("/users", userRouter)
+
+function logger(req, res, next){
+  console.log(req.originalUrl)
+  next()
+}
 
 app.listen(3000)
